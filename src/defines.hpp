@@ -23,14 +23,23 @@ typedef struct{
 	int x;
 	int y;
 }punto;
-
+typedef struct{
+	float gradiente;
+	float harris;
+	float goodPixels;
+	float qSort;
+	float noParalelo;
+	float total;
+}tiempos;
 typedef struct{
 	int *d_p;
 	int *d_q;
 	int *d_pq;
-	unsigned int *d_pixHist;
+	//unsigned int *d_pixHist;
+	int *d_max;
 	unsigned char *d_input;
 	int *d_R;
+	int *d_nCandidates;
 	int *d_pCandidateOffsets;
 	int *d_odata;
 	int numBlocks;
@@ -61,5 +70,6 @@ __device__ void warpReduce(volatile int *sdata, unsigned int tid, int blockSize)
 __global__ void reduce(int *g_idata, int *g_odata, unsigned int n, int blockSize);
 unsigned int nextPow2(unsigned int x);
 void getNumBlocksAndThreads(int whichKernel, int n, int maxBlocks, int maxThreads, int &blocks, int &threads);
-
+void reserva_memoria(parametros &param, int ancho, int alto);
+void libera_memoria(parametros &param);
 #endif /* DEFINES_HPP_ */
